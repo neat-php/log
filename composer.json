@@ -1,0 +1,29 @@
+{
+    "name": "neat/log",
+    "description": "Neat Log components",
+    "type": "library",
+    "keywords": ["log"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Guido van Biemen",
+            "email": "guidovanbiemen@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Neat\\Log\\": "classes/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Neat\\Log\\Test\\": "tests/"
+        }
+    },
+   "require": {
+        "php": ">=7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.0"
+    }
+}
