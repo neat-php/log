@@ -2,7 +2,9 @@
     "name": "neat/log",
     "description": "Neat Log components",
     "type": "library",
-    "keywords": ["log"],
+    "keywords": [
+        "log"
+    ],
     "license": "MIT",
     "authors": [
         {
@@ -20,10 +22,12 @@
             "Neat\\Log\\Test\\": "tests/"
         }
     },
-   "require": {
-        "php": ">=7.0"
+    "require": {
+        "php": ">=7.0",
+        "psr/log": "^1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.0"
+        "phpunit/phpunit": "^6.0",
+        "mikey179/vfsStream": "^1.0"
     }
 }
