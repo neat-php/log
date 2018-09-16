@@ -6,7 +6,7 @@ use Psr\Log\InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LoggerTrait;
 
-class Level
+class Format implements LoggerInterface
 {
     use LoggerTrait;
 
@@ -16,31 +16,26 @@ class Level
     private $logger;
 
     /**
+     * @var callable[]
+     */
+    private $formats;
+
+    /**
      * Format constructor
      *
      * @param LoggerInterface $logger
+     * @param callable[]      $formats
      */
-    public function __construct(LoggerInterface $logger)
+    public function __construct(LoggerInterface $logger, callable ...$formats)
     {
-        $this->logger = $logger;
+        $this->logger  = $logger;
+        $this->formats = $formats;
     }
 
     /**
-     * Format message with level
+     * Log message using formatter
      *
      * @param string $level
-     * @param string $message
-     * @return string
-     */
-    private function format(string $level, string $message): string
-    {
-        return sprintf('[%s] %s', $level, $message);
-    }
-
-    /**
-     * Log message with level
-     *
-     * @param mixed  $level
      * @param string $message
      * @param array  $context
      */
@@ -50,6 +45,10 @@ class Level
             throw new InvalidArgumentException('Log level must be a string, ' . gettype($level) . ' given');
         }
 
-        $this->logger->log($level, $this->format($level, $message), $context);
+        foreach ($this->formats as $format) {
+            $message = $format($level, $message, $context);
+        }
+
+        $this->logger->log($level, $message, $context);
     }
 }

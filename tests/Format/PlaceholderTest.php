@@ -2,31 +2,11 @@
 
 namespace Neat\Log\Test;
 
-use Neat\Log\Placeholder;
-use PHPUnit\Framework\MockObject\MockObject;
+use Neat\Log\Format\Placeholder;
 use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
 class PlaceholderTest extends TestCase
 {
-    /**
-     * Create mocked logger expecting one log entry
-     *
-     * @param string $level
-     * @param string $message
-     * @param array  $context
-     * @return MockObject|LoggerInterface
-     */
-    public function createMockExpecting($level, $message, $context = [])
-    {
-        $mock = $this->createMock(LoggerInterface::class);
-        $mock->expects($this->once())
-            ->method('log')
-            ->with($level, $message, $context);
-
-        return $mock;
-    }
-
     /**
      * Provide placeholder data
      *
@@ -60,9 +40,8 @@ class PlaceholderTest extends TestCase
      */
     public function testPlaceholder(string $message, array $context, string $expected)
     {
-        $mock = $this->createMockExpecting('warning', $expected, $context);
+        $format = new Placeholder;
 
-        $log = new Placeholder($mock);
-        $log->log('warning', $message, $context);
+        $this->assertSame($expected, $format('warning', $message, $context));
     }
 }
