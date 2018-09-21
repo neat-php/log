@@ -18,7 +18,7 @@ class Timestamp
     private $timezone;
 
     /**
-     * Format constructor
+     * Timestamp constructor
      *
      * @param string              $format
      * @param string|DateTimeZone $timezone
