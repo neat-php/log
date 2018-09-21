@@ -3,7 +3,9 @@
     "description": "Neat Log components",
     "type": "library",
     "keywords": [
-        "log"
+        "log",
+        "logger",
+        "psr"
     ],
     "license": "MIT",
     "authors": [
@@ -21,6 +23,9 @@
         "psr-4": {
             "Neat\\Log\\Test\\": "tests/"
         }
+    },
+    "provide": {
+        "psr/log-implementation": "1.0.0"
     },
     "require": {
         "php": ">=7.0",
