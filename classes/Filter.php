@@ -20,7 +20,7 @@ class Filter implements LoggerInterface
     private $filters;
 
     /**
-     * Format constructor
+     * Filter constructor
      *
      * @param LoggerInterface $logger
      * @param callable[]      $filters
