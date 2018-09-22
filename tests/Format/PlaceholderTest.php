@@ -1,6 +1,6 @@
 <?php
 
-namespace Neat\Log\Test;
+namespace Neat\Log\Test\Format;
 
 use Neat\Log\Format\Placeholder;
 use PHPUnit\Framework\TestCase;
