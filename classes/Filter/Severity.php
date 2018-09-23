@@ -2,24 +2,10 @@
 
 namespace Neat\Log\Filter;
 
-use Psr\Log\LogLevel;
+use Neat\Log\Level;
 
 class Severity
 {
-    /**
-     * @see https://tools.ietf.org/html/rfc5424#page-11
-     */
-    const SEVERITIES = [
-        LogLevel::EMERGENCY => 0,
-        LogLevel::ALERT     => 1,
-        LogLevel::CRITICAL  => 2,
-        LogLevel::ERROR     => 3,
-        LogLevel::WARNING   => 4,
-        LogLevel::NOTICE    => 5,
-        LogLevel::INFO      => 6,
-        LogLevel::DEBUG     => 7,
-    ];
-
     /**
      * @var int
      */
@@ -32,7 +18,7 @@ class Severity
      */
     public function __construct(string $level)
     {
-        $this->severity = self::SEVERITIES[$level] ?? null;
+        $this->severity = Level::PRIORITIES[$level] ?? null;
     }
 
     /**
@@ -43,7 +29,7 @@ class Severity
      */
     public function __invoke(string $level): bool
     {
-        $severity = self::SEVERITIES[$level] ?? null;
+        $severity = Level::PRIORITIES[$level] ?? null;
 
         return $this->severity === null
             || $severity === null
