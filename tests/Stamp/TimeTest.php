@@ -21,7 +21,7 @@ class TimeTest extends TestCase
             }
         };
 
-        $this->assertSame('2018-09-16T10:59:01+0200', $time('info', 'Hi'));
+        $this->assertSame('2018-09-16T10:59:01+0200', $time());
     }
 
     /**
@@ -36,7 +36,7 @@ class TimeTest extends TestCase
             }
         };
 
-        $this->assertSame('2018-09-16 10:59:01.123456', $time('info', 'Hi'));
+        $this->assertSame('2018-09-16 10:59:01.123456', $time());
     }
 
     /**
@@ -49,7 +49,7 @@ class TimeTest extends TestCase
             date_default_timezone_set('Etc/GMT+12');
 
             $time = new Time('O');
-            $this->assertSame('-1200', $time('info', 'Hi'));
+            $this->assertSame('-1200', $time());
         } finally {
             date_default_timezone_set($default);
         }
@@ -62,7 +62,7 @@ class TimeTest extends TestCase
     {
         $time = new Time('O', '-0615');
 
-        $this->assertSame('-0615', $time('info', 'Hi'));
+        $this->assertSame('-0615', $time());
     }
 
     /**
@@ -72,6 +72,6 @@ class TimeTest extends TestCase
     {
         $time = new Time('O', new DateTimeZone('-0615'));
 
-        $this->assertSame('-0615', $time('info', 'Hi'));
+        $this->assertSame('-0615', $time());
     }
 }

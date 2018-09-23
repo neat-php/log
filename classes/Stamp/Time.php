@@ -36,11 +36,9 @@ class Time
     /**
      * Format message with timestamp
      *
-     * @param string $level
-     * @param string $message
      * @return string
      */
-    public function __invoke(string $level, string $message): string
+    public function __invoke(): string
     {
         return $this->time()->format($this->format);
     }
