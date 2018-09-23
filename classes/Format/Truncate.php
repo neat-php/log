@@ -39,7 +39,7 @@ class Truncate
      * @param string $message
      * @return string
      */
-    public function __invoke(string $level, string $message)
+    public function __invoke(string $level, string $message): string
     {
         if (strlen($message) <= $this->length) {
             return $message;
