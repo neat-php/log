@@ -40,6 +40,9 @@ class Filter implements LoggerInterface
      */
     public function log($level, $message, array $context = [])
     {
+        $level   = Normalize::string($level);
+        $message = Normalize::string($message);
+
         foreach ($this->filters as $filter) {
             if (!$filter($level, $message, $context)) {
                 return;

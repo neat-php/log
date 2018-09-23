@@ -61,13 +61,11 @@ class File implements LoggerInterface
     }
 
     /**
-     * Logs with an arbitrary level.
+     * Logs with an arbitrary level
      *
-     * @param mixed $level
+     * @param mixed  $level
      * @param string $message
-     * @param array $context
-     *
-     * @return void
+     * @param array  $context
      */
     public function log($level, $message, array $context = [])
     {

@@ -34,12 +34,15 @@ class Format implements LoggerInterface
     /**
      * Log message using formatter
      *
-     * @param mixed $level
+     * @param mixed  $level
      * @param string $message
      * @param array  $context
      */
     public function log($level, $message, array $context = [])
     {
+        $level   = Normalize::string($level);
+        $message = Normalize::string($message);
+
         foreach ($this->formats as $format) {
             $message = $format($level, $message, $context);
         }
