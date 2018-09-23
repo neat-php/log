@@ -1,27 +1,27 @@
 <?php
 
-namespace Neat\Log\Test;
+namespace Neat\Log\Test\Stamp;
 
 use DateTime;
 use DateTimeZone;
-use Neat\Log\Format\Timestamp;
+use Neat\Log\Stamp\Time;
 use PHPUnit\Framework\TestCase;
 
-class TimestampTest extends TestCase
+class TimeTest extends TestCase
 {
     /**
      * Test default
      */
     public function testDefault()
     {
-        $format = new class extends Timestamp {
+        $time = new class extends Time {
             protected function time(): DateTime
             {
                 return new DateTime('2018-09-16T10:59:01+0200');
             }
         };
 
-        $this->assertSame('[2018-09-16T10:59:01+0200] Hi', $format('info', 'Hi'));
+        $this->assertSame('2018-09-16T10:59:01+0200', $time('info', 'Hi'));
     }
 
     /**
@@ -29,14 +29,14 @@ class TimestampTest extends TestCase
      */
     public function testFormat()
     {
-        $format = new class('Y-m-d H:i:s.u') extends Timestamp {
+        $time = new class('Y-m-d H:i:s.u') extends Time {
             protected function time(): DateTime
             {
                 return new DateTime('2018-09-16T10:59:01.123456+0200');
             }
         };
 
-        $this->assertSame('[2018-09-16 10:59:01.123456] Hi', $format('info', 'Hi'));
+        $this->assertSame('2018-09-16 10:59:01.123456', $time('info', 'Hi'));
     }
 
     /**
@@ -48,8 +48,8 @@ class TimestampTest extends TestCase
         try {
             date_default_timezone_set('Etc/GMT+12');
 
-            $format = new Timestamp('O');
-            $this->assertSame('[-1200] Hi', $format('info', 'Hi'));
+            $time = new Time('O');
+            $this->assertSame('-1200', $time('info', 'Hi'));
         } finally {
             date_default_timezone_set($default);
         }
@@ -60,9 +60,9 @@ class TimestampTest extends TestCase
      */
     public function testCustomTimeZone()
     {
-        $format = new Timestamp('O', '-0615');
+        $time = new Time('O', '-0615');
 
-        $this->assertSame('[-0615] Hi', $format('info', 'Hi'));
+        $this->assertSame('-0615', $time('info', 'Hi'));
     }
 
     /**
@@ -70,8 +70,8 @@ class TimestampTest extends TestCase
      */
     public function testCustomTimeZoneObject()
     {
-        $format = new Timestamp('O', new DateTimeZone('-0615'));
+        $time = new Time('O', new DateTimeZone('-0615'));
 
-        $this->assertSame('[-0615] Hi', $format('info', 'Hi'));
+        $this->assertSame('-0615', $time('info', 'Hi'));
     }
 }

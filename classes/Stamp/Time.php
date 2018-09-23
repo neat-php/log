@@ -1,11 +1,11 @@
 <?php
 
-namespace Neat\Log\Format;
+namespace Neat\Log\Stamp;
 
 use DateTime;
 use DateTimeZone;
 
-class Timestamp
+class Time
 {
     /**
      * @var string
@@ -42,7 +42,7 @@ class Timestamp
      */
     public function __invoke(string $level, string $message): string
     {
-        return sprintf('[%s] %s', $this->time()->format($this->format), $message);
+        return $this->time()->format($this->format);
     }
 
     /**
