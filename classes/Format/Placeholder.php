@@ -2,6 +2,8 @@
 
 namespace Neat\Log\Format;
 
+use Neat\Log\Normalize;
+
 class Placeholder
 {
     /**
@@ -13,13 +15,11 @@ class Placeholder
      * @return string
      * @see https://www.php-fig.org/psr/psr-3/#12-message
      */
-    public function __invoke(string $level, string $message, array $context = []): string
+    public function __invoke(string $level, string $message, array $context): string
     {
         $replace = [];
-        foreach ($context as $key => $value) {
-            if (!is_array($value) && (!is_object($value) || method_exists($value, '__toString'))) {
-                $replace['{' . $key . '}'] = $value;
-            }
+        foreach (Normalize::strings($context) as $key => $value) {
+            $replace['{' . $key . '}'] = $value;
         }
 
         return strtr($message, $replace);

@@ -2,6 +2,8 @@
 
 namespace Neat\Log\Format;
 
+use Neat\Log\Normalize;
+
 class Context
 {
     /**
@@ -27,11 +29,9 @@ class Context
      * @param array  $context
      * @return string
      */
-    public function __invoke(string $level, string $message, array $context = []): string
+    public function __invoke(string $level, string $message, array $context): string
     {
-        $context = array_filter($context, function ($value) {
-            return !is_array($value) && (!is_object($value) || method_exists($value, '__toString'));
-        });
+        $context = Normalize::strings($context);
 
         $lines  = array_diff_key($context, $this->blocks);
         $blocks = array_intersect_key($context, $this->blocks);
