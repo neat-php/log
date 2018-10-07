@@ -85,7 +85,7 @@ $log = new File(...);
 $log = new Stamp($log, new Stamp\Time);
 
 // The Time stamp allows for setting a custom format and timezone
-$log = new Stamp($log, new Stamp\Time('Y-m-d H:i:s.uO', 'europe/amsterdam));
+$log = new Stamp($log, new Stamp\Time('Y-m-d H:i:s.uO', 'europe/amsterdam'));
 
 // Stamps are just callables returning a string that will precede each message:
 $log = new Stamp($log, function ($level, $message) {
