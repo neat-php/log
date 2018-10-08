@@ -36,7 +36,7 @@ class Context
         $lines  = array_diff_key($context, $this->blocks);
         $blocks = array_intersect_key($context, $this->blocks);
 
-        return $message . $this->formatLines($lines) . $this->formatBlocks($blocks);
+        return $message . $this->formatLines($lines) . $this->formatBlocks($blocks) . "\n";
     }
 
     /**
@@ -47,6 +47,10 @@ class Context
      */
     private function formatLines(array $lines)
     {
+        if (empty($lines)) {
+            return '';
+        }
+
         $max = max(array_map('strlen', array_keys($lines))) + 1;
 
         return implode('', array_map(function ($key, $value) use ($max) {
@@ -63,7 +67,7 @@ class Context
     private function formatBlocks(array $blocks)
     {
         return implode('', array_map(function ($key, $value) {
-            return sprintf("\n\n%s\n%s\n\n%s\n", $key, str_repeat('-', strlen($key)), $value);
+            return sprintf("\n\n%s\n%s\n%s", $key, str_repeat('-', strlen($key)), $value);
         }, array_keys($blocks), $blocks));
     }
 }
