@@ -70,10 +70,8 @@ class File implements LoggerInterface
     public function log($level, $message, array $context = [])
     {
         $handle = $this->handle();
-        if (!$handle) {
-            return;
+        if ($handle) {
+            fwrite($handle, $message . PHP_EOL);
         }
-
-        fwrite($this->handle, $message . PHP_EOL);
     }
 }
