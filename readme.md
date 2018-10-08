@@ -38,6 +38,17 @@ $log->emergency('System passed away');
 $log->log('meltdown', 'Clear the region ASAP!');
 ```
 
+Syslog
+------
+To send messages to the syslog, just create a Syslog instance.
+```php
+// The first parameter is an identifier that gets prepended to each message.
+$log = new Neat\Log\Syslog('AppIdentifier');
+
+// Any of the default log levels are used to determine the syslog message priority
+$log->info(...); // logs a syslog entry with LOG_INFO priority
+```
+
 Context
 -------
 To provide context with your log messages, pass any data describing the context
