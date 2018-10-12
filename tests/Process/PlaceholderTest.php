@@ -1,8 +1,8 @@
 <?php
 
-namespace Neat\Log\Test\Format;
+namespace Neat\Log\Test\Process;
 
-use Neat\Log\Format\Placeholder;
+use Neat\Log\Process\Placeholder;
 use Neat\Log\Record;
 use PHPUnit\Framework\TestCase;
 

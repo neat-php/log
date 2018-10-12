@@ -1,6 +1,6 @@
 <?php
 
-namespace Neat\Log\Format;
+namespace Neat\Log\Process;
 
 use Neat\Log\Record;
 

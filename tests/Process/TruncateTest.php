@@ -1,9 +1,9 @@
 <?php
 
-namespace Neat\Log\Test\Format;
+namespace Neat\Log\Test\Process;
 
 use LogicException;
-use Neat\Log\Format\Truncate;
+use Neat\Log\Process\Truncate;
 use Neat\Log\Record;
 use PHPUnit\Framework\TestCase;
 

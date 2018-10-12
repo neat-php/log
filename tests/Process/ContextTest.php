@@ -1,8 +1,8 @@
 <?php
 
-namespace Neat\Log\Test\Format;
+namespace Neat\Log\Test\Process;
 
-use Neat\Log\Format\Context;
+use Neat\Log\Process\Context;
 use Neat\Log\Record;
 use PHPUnit\Framework\TestCase;
 
@@ -29,19 +29,19 @@ class ContextTest extends TestCase
     }
 
     /**
-     * Test context format
+     * Test context processor
      *
-     * @param string $formatted
+     * @param string $result
      * @param string $message
      * @param array  $context
      * @dataProvider provideContextData
      */
-    public function testContext(string $formatted, string $message, array $context)
+    public function testContext(string $result, string $message, array $context)
     {
-        $before = new Record('info', $message, $context);
-        $after  = new Record('info', $formatted, $context);
-        $format = new Context(['trace', 'query']);
+        $before    = new Record('info', $message, $context);
+        $after     = new Record('info', $result, $context);
+        $processor = new Context(['trace', 'query']);
 
-        $this->assertEquals($after, $format($before));
+        $this->assertEquals($after, $processor($before));
     }
 }

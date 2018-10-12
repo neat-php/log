@@ -1,6 +1,6 @@
 <?php
 
-namespace Neat\Log\Format;
+namespace Neat\Log\Process;
 
 use LogicException;
 use Neat\Log\Record;

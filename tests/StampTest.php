@@ -21,8 +21,8 @@ class StampTest extends TestCase
             ->method('log')
             ->with('debug', 'Original message', ['foo' => 'bar']);
 
-        $format = new Stamp($mock);
-        $format->debug('Original message', ['foo' => 'bar']);
+        $stamp = new Stamp($mock);
+        $stamp->debug('Original message', ['foo' => 'bar']);
     }
 
     /**
@@ -43,7 +43,7 @@ class StampTest extends TestCase
             ->with(new Record('info', 'Hi', ['foo' => 'bar']))
             ->willReturn('stamped');
 
-        $format = new Stamp($log, $stamper);
-        $format->info('Hi', ['foo' => 'bar']);
+        $stamp = new Stamp($log, $stamper);
+        $stamp->info('Hi', ['foo' => 'bar']);
     }
 }

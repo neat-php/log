@@ -5,7 +5,7 @@ namespace Neat\Log;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LoggerTrait;
 
-class Format implements LoggerInterface
+class Process implements LoggerInterface
 {
     use LoggerTrait;
 
@@ -17,18 +17,18 @@ class Format implements LoggerInterface
     /**
      * @var callable[]
      */
-    private $formats;
+    private $processors;
 
     /**
-     * Format constructor
+     * Processor constructor
      *
      * @param LoggerInterface $logger
-     * @param callable[]      $formats
+     * @param callable[]      $processors
      */
-    public function __construct(LoggerInterface $logger, callable ...$formats)
+    public function __construct(LoggerInterface $logger, callable ...$processors)
     {
-        $this->logger  = $logger;
-        $this->formats = $formats;
+        $this->logger     = $logger;
+        $this->processors = $processors;
     }
 
     /**
@@ -42,8 +42,8 @@ class Format implements LoggerInterface
     {
         $record = new Record($level, $message, $context);
 
-        foreach ($this->formats as $format) {
-            $record = $format($record);
+        foreach ($this->processors as $processor) {
+            $record = $processor($record);
         }
 
         $this->logger->log($record->level(), $record->message(), $record->context());
