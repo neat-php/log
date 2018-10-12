@@ -113,23 +113,23 @@ The resulting log file will look like this:
 [2018-09-23T14:53:08+0200] [error] Something has gone wrong
 ```
 
-Formats
--------
-Greater transformations to the log message can be made using the Format logger.
+Processing
+----------
+To enhance, format or alter your log output, you can use the Process logger.
 This logger allows you to completely modify and rewrite the log message:
 ```php
 // Like the other addon loggers, you'll need a log destination first
 $log = new File(...);
 
-// Then you add placeholder substition using the placeholder format
-$log = new Format($log, Format\Placeholder);
+// Then you can add placeholder substition using the placeholder processor
+$log = new Process($log, Process\Placeholder);
 $log->info('User {user} wrote a new post titled "{title}"', ['user' => 'John', 'my post title']);
 
 // Or have your messages truncated above a specified message length
-$log = new Format($log, Format\Truncate(80));
+$log = new Process($log, Process\Truncate(80));
 
 // Or have all context appended to each log entry
-$log = new Format($log, Format\Context);
+$log = new Process($log, Process\Context);
 ```
 
 Putting it all together
@@ -139,7 +139,7 @@ When you combine these loggers you can create really neat log assemblies like th
 $log = new File('logs/app.log');
 $log = new Filter($log, new Filter\Severity('warning'));
 $log = new Stamp($log, new Stamp\Time, new Stamp\Level);
-$log = new Format($log, new Format\Truncate(80));
+$log = new Process($log, new Process\Truncate(80));
 $log->info(...);
 ```
 
