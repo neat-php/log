@@ -18,7 +18,7 @@ class Severity
      */
     public function __construct(string $level)
     {
-        $this->severity = Record::PRIORITIES[$level] ?? null;
+        $this->severity = Record::PRIORITIES[$level] ?? LOG_DEBUG;
     }
 
     /**
@@ -29,10 +29,8 @@ class Severity
      */
     public function __invoke(Record $record): bool
     {
-        $severity = $record->priority();
+        $severity = $record->priority() ?? LOG_EMERG;
 
-        return $this->severity === null
-            || $severity === null
-            || $severity <= $this->severity;
+        return $severity <= $this->severity;
     }
 }
