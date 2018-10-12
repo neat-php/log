@@ -25,7 +25,7 @@ class Manifold implements LoggerInterface
     }
 
     /**
-     * Log message using formatter
+     * Log message using many loggers
      *
      * @param mixed  $level
      * @param string $message

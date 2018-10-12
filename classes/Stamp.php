@@ -32,7 +32,7 @@ class Stamp implements LoggerInterface
     }
 
     /**
-     * Log message using formatter
+     * Log message with stamps
      *
      * @param mixed  $level
      * @param string $message
