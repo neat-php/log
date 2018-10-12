@@ -3,6 +3,7 @@
 namespace Neat\Log\Format;
 
 use LogicException;
+use Neat\Log\Record;
 
 class Truncate
 {
@@ -35,16 +36,18 @@ class Truncate
     /**
      * Truncate message
      *
-     * @param string $level
-     * @param string $message
-     * @return string
+     * @param Record $record
+     * @return Record
      */
-    public function __invoke(string $level, string $message): string
+    public function __invoke(Record $record): Record
     {
+        $message = $record->message();
         if (strlen($message) <= $this->length) {
-            return $message;
+            return $record;
         }
 
-        return substr($message, 0, $this->length - strlen($this->overflow)) . $this->overflow;
+        return $record->withMessage(
+            substr($message, 0, $this->length - strlen($this->overflow)) . $this->overflow
+        );
     }
 }

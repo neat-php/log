@@ -2,16 +2,18 @@
 
 namespace Neat\Log\Stamp;
 
+use Neat\Log\Record;
+
 class Level
 {
     /**
      * Format message with level
      *
-     * @param string $level
+     * @param Record $record
      * @return string
      */
-    public function __invoke(string $level): string
+    public function __invoke(Record $record): string
     {
-        return $level;
+        return $record->level();
     }
 }

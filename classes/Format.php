@@ -32,7 +32,7 @@ class Format implements LoggerInterface
     }
 
     /**
-     * Log message using formatter
+     * Log message after processing it
      *
      * @param mixed  $level
      * @param string $message
@@ -40,13 +40,12 @@ class Format implements LoggerInterface
      */
     public function log($level, $message, array $context = [])
     {
-        $level   = Normalize::string($level);
-        $message = Normalize::string($message);
+        $record = new Record($level, $message, $context);
 
         foreach ($this->formats as $format) {
-            $message = $format($level, $message, $context);
+            $record = $format($record);
         }
 
-        $this->logger->log($level, $message, $context);
+        $this->logger->log($record->level(), $record->message(), $record->context());
     }
 }

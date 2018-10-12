@@ -2,7 +2,7 @@
 
 namespace Neat\Log\Format;
 
-use Neat\Log\Normalize;
+use Neat\Log\Record;
 
 class Context
 {
@@ -24,19 +24,19 @@ class Context
     /**
      * Format message with context
      *
-     * @param string $level
-     * @param string $message
-     * @param array  $context
-     * @return string
+     * @param Record $record
+     * @return Record
      */
-    public function __invoke(string $level, string $message, array $context): string
+    public function __invoke(Record $record): Record
     {
-        $context = Normalize::strings($context);
+        $context = $record->contextStrings();
 
         $lines  = array_diff_key($context, $this->blocks);
         $blocks = array_intersect_key($context, $this->blocks);
 
-        return $message . $this->formatLines($lines) . $this->formatBlocks($blocks) . "\n";
+        return $record->withMessage(
+            $record->message() . $this->formatLines($lines) . $this->formatBlocks($blocks) . "\n"
+        );
     }
 
     /**

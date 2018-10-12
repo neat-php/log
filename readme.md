@@ -76,12 +76,12 @@ $log = new Filter($log, new Filter\Serverity('warning'));
 $log = new Filter($log, new Filter\Pattern('/mail/'));
 
 // Filters are just callables that return a boolean. Roll your own if you like:
-$log = new Filter($log, function($level, $message, array $context): bool {
-    return strtoupper($message) != $message; // prevents ALL CAPS logs
+$log = new Filter($log, function(Record $record): bool {
+    return strtoupper($record->message()) != $record->message(); // prevents ALL CAPS logs
 });
 
 // The filter logger even accepts multiple filters at once
-$log = new Filter($log, new Filter\Severity('warning'), new Pattern('/keyword/'));
+$log = new Filter($log, new Filter\Severity('warning'), new Filter\Pattern('/keyword/'));
 ```
 
 Stamps
@@ -99,8 +99,8 @@ $log = new Stamp($log, new Stamp\Time);
 $log = new Stamp($log, new Stamp\Time('Y-m-d H:i:s.uO', 'europe/amsterdam'));
 
 // Stamps are just callables returning a string that will precede each message:
-$log = new Stamp($log, function ($level, $message) {
-    return strlen(message) . ' bytes';
+$log = new Stamp($log, function (Record $record) {
+    return strlen($record->message()) . ' bytes';
 });
 
 // Just like the Filter logger, you can use multiple stamps

@@ -2,7 +2,7 @@
 
 namespace Neat\Log\Filter;
 
-use Neat\Log\Level;
+use Neat\Log\Record;
 
 class Severity
 {
@@ -18,18 +18,18 @@ class Severity
      */
     public function __construct(string $level)
     {
-        $this->severity = Level::PRIORITIES[$level] ?? null;
+        $this->severity = Record::PRIORITIES[$level] ?? null;
     }
 
     /**
      * Level has severity?
      *
-     * @param string $level
+     * @param Record $record
      * @return bool
      */
-    public function __invoke(string $level): bool
+    public function __invoke(Record $record): bool
     {
-        $severity = Level::PRIORITIES[$level] ?? null;
+        $severity = $record->priority();
 
         return $this->severity === null
             || $severity === null

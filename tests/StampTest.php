@@ -2,6 +2,7 @@
 
 namespace Neat\Log\Test;
 
+use Neat\Log\Record;
 use Neat\Log\Stamp;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -10,8 +11,7 @@ use Psr\Log\LoggerInterface;
 class StampTest extends TestCase
 {
     /**
-     * Test without format
-     *
+     * Test without stamp
      */
     public function testWithoutStamp()
     {
@@ -26,7 +26,7 @@ class StampTest extends TestCase
     }
 
     /**
-     * Test placeholder
+     * Test with stamp
      */
     public function testStamp()
     {
@@ -40,7 +40,7 @@ class StampTest extends TestCase
         $stamper = $this->createPartialMock('stdClass', ['__invoke']);
         $stamper->expects($this->once())
             ->method('__invoke')
-            ->with('info', 'Hi', ['foo' => 'bar'])
+            ->with(new Record('info', 'Hi', ['foo' => 'bar']))
             ->willReturn('stamped');
 
         $format = new Stamp($log, $stamper);

@@ -3,6 +3,7 @@
 namespace Neat\Log\Test\Format;
 
 use Neat\Log\Format\Placeholder;
+use Neat\Log\Record;
 use PHPUnit\Framework\TestCase;
 
 class PlaceholderTest extends TestCase
@@ -40,8 +41,10 @@ class PlaceholderTest extends TestCase
      */
     public function testPlaceholder(string $message, array $context, string $expected)
     {
+        $before = new Record('warning', $message, $context);
+        $after  = new Record('warning', $expected, $context);
         $format = new Placeholder;
 
-        $this->assertSame($expected, $format('warning', $message, $context));
+        $this->assertEquals($after, $format($before));
     }
 }

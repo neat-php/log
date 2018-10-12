@@ -51,4 +51,79 @@ class RecordTest extends TestCase
         $this->assertSame([], $message->withContext([])->context());
         $this->assertSame(['foo' => 'bar'], $message->context());
     }
+
+    /**
+     * Provide string data
+     *
+     * @return array
+     */
+    public function provideStringData()
+    {
+        $object = new class {
+            function __toString()
+            {
+                return 'converted to string';
+            }
+        };
+        return [
+            ['', ''],
+            ['test', 'test'],
+            [$object, 'converted to string'],
+            [new \stdClass, 'stdClass'],
+            [new \DateTime, 'DateTime'],
+            [[], 'array'],
+            [['test'], 'array'],
+            [0, '0'],
+            [1, '1'],
+            [.5, '0.5'],
+            [true, 'true'],
+            [false, 'false'],
+            [null, 'null'],
+        ];
+    }
+
+    /**
+     * Test normalized level
+     *
+     * @param mixed  $value
+     * @param string $expected
+     * @dataProvider provideStringData
+     */
+    public function testNormalizedLevel($value, string $expected)
+    {
+        $record = new Record($value, '');
+
+        $this->assertSame($expected, $record->level());
+    }
+
+    /**
+     * Test normalized level
+     *
+     * @param mixed  $value
+     * @param string $expected
+     * @dataProvider provideStringData
+     */
+    public function testNormalizedMessage($value, string $expected)
+    {
+        $record = new Record('info', $value);
+
+        $this->assertSame($expected, $record->message());
+    }
+
+    /**
+     * Test normalized context strings
+     */
+    public function testNormalizedContextStrings()
+    {
+        $values   = [];
+        $expected = [];
+        foreach ($this->provideStringData() as list($in, $out)) {
+            $values[] = $in;
+            $expected[] = $out;
+        }
+
+        $record = new Record('info', 'testing', $values);
+
+        $this->assertSame($expected, $record->contextStrings());
+    }
 }

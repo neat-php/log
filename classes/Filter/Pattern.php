@@ -2,6 +2,8 @@
 
 namespace Neat\Log\Filter;
 
+use Neat\Log\Record;
+
 class Pattern
 {
     /**
@@ -29,12 +31,11 @@ class Pattern
     /**
      * Message matches pattern?
      *
-     * @param string $level
-     * @param string $message
+     * @param Record $record
      * @return bool
      */
-    public function __invoke(string $level, string $message): bool
+    public function __invoke(Record $record): bool
     {
-        return $this->exclude xor preg_match($this->pattern, $message);
+        return $this->exclude xor preg_match($this->pattern, $record->message());
     }
 }

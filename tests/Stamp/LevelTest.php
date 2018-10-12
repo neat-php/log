@@ -2,6 +2,7 @@
 
 namespace Neat\Log\Test\Stamp;
 
+use Neat\Log\Record;
 use Neat\Log\Stamp\Level;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LogLevel;
@@ -37,8 +38,9 @@ class LevelTest extends TestCase
      */
     public function testLevel(string $level)
     {
+        $record = new Record($level, 'message');
         $format = new Level;
 
-        $this->assertSame($level, $format($level));
+        $this->assertSame($level, $format($record));
     }
 }

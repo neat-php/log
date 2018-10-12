@@ -40,14 +40,13 @@ class Stamp implements LoggerInterface
      */
     public function log($level, $message, array $context = [])
     {
-        $level   = Normalize::string($level);
-        $message = Normalize::string($message);
+        $record = new Record($level, $message, $context);
 
         $prefix = '';
         foreach ($this->stamps as $stamp) {
-            $prefix .= '[' . $stamp($level, $message, $context) . '] ';
+            $prefix .= '[' . $stamp($record) . '] ';
         }
 
-        $this->logger->log($level, $prefix . $message, $context);
+        $this->logger->log($record->level(), $prefix . $record->message(), $record->context());
     }
 }

@@ -3,6 +3,7 @@
 namespace Neat\Log\Test;
 
 use Neat\Log\Format;
+use Neat\Log\Record;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
@@ -23,26 +24,6 @@ class FormatTest extends TestCase
         $mock->expects($this->once())
             ->method('log')
             ->with($level, $message, $context);
-
-        return $mock;
-    }
-
-    /**
-     * Create mocked logger expecting one log entry
-     *
-     * @param string $level
-     * @param string $message
-     * @param array  $context
-     * @param string $result
-     * @return MockObject|callable
-     */
-    public function createFormatMockExpecting(string $level, string $message, array $context, string $result)
-    {
-        $mock = $this->createPartialMock('stdClass', ['__invoke']);
-        $mock->expects($this->once())
-            ->method('__invoke')
-            ->with($level, $message, $context)
-            ->willReturn($result);
 
         return $mock;
     }
@@ -87,7 +68,13 @@ class FormatTest extends TestCase
     public function testFormat(string $level, string $message, array $context, string $expected)
     {
         $log = $this->createLogMockExpecting($level, $expected, $context);
-        $formatter = $this->createFormatMockExpecting($level, $message, $context, $expected);
+
+        /** @var MockObject|callable $formatter */
+        $formatter = $this->createPartialMock('stdClass', ['__invoke']);
+        $formatter->expects($this->once())
+            ->method('__invoke')
+            ->with(new Record($level, $message, $context))
+            ->willReturn(new Record($level, $expected, $context));
 
         $format = new Format($log, $formatter);
         $format->$level($message, $context);

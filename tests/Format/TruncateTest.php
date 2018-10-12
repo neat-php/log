@@ -4,6 +4,7 @@ namespace Neat\Log\Test\Format;
 
 use LogicException;
 use Neat\Log\Format\Truncate;
+use Neat\Log\Record;
 use PHPUnit\Framework\TestCase;
 
 class TruncateTest extends TestCase
@@ -15,8 +16,8 @@ class TruncateTest extends TestCase
     {
         $truncate = new Truncate(8);
 
-        $this->assertSame('original', $truncate('debug', 'original'));
-        $this->assertSame('ok', $truncate('info', 'ok'));
+        $this->assertSame($expected = new Record('debug', 'original'), $truncate($expected));
+        $this->assertSame($expected = new Record('info', 'ok'), $truncate($expected));
     }
 
     /**
@@ -26,8 +27,8 @@ class TruncateTest extends TestCase
     {
         $truncate = new Truncate(8);
 
-        $this->assertSame('too long', $truncate('debug', 'too long!'));
-        $this->assertSame('Way too ', $truncate('debug', 'Way too long'));
+        $this->assertEquals(new Record('debug', 'too long'), $truncate(new Record('debug', 'too long!')));
+        $this->assertEquals(new Record('debug', 'Way too '), $truncate(new Record('debug', 'Way too long')));
     }
 
     /**
@@ -35,9 +36,9 @@ class TruncateTest extends TestCase
      */
     public function testOverflow()
     {
-        $this->assertSame('too l$', (new Truncate(6, '$'))('debug', 'too long!'));
-        $this->assertSame('too...', (new Truncate(6, '...'))('debug', 'too long!'));
-        $this->assertSame('too lo', (new Truncate(6, ''))('debug', 'too long!'));
+        $this->assertEquals(new Record('debug', 'too l$'), (new Truncate(6, '$'))(new Record('debug', 'too long!')));
+        $this->assertEquals(new Record('debug', 'too...'), (new Truncate(6, '...'))(new Record('debug', 'too long!')));
+        $this->assertEquals(new Record('debug', 'too lo'), (new Truncate(6, ''))(new Record('debug', 'too long!')));
     }
 
     /**

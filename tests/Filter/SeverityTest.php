@@ -3,6 +3,7 @@
 namespace Neat\Log\Test\Filter;
 
 use Neat\Log\Filter\Severity;
+use Neat\Log\Record;
 use PHPUnit\Framework\TestCase;
 
 class SeverityTest extends TestCase
@@ -36,8 +37,9 @@ class SeverityTest extends TestCase
      */
     public function testLevel(bool $match, string $minimumLevel, string $level)
     {
+        $record   = new Record($level, 'message');
         $severity = new Severity($minimumLevel);
-        $matched  = $severity($level);
+        $matched  = $severity($record);
 
         $this->assertSame($match, $matched);
     }

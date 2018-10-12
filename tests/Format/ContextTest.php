@@ -3,6 +3,7 @@
 namespace Neat\Log\Test\Format;
 
 use Neat\Log\Format\Context;
+use Neat\Log\Record;
 use PHPUnit\Framework\TestCase;
 
 class ContextTest extends TestCase
@@ -22,7 +23,7 @@ class ContextTest extends TestCase
             [
                 "Hi\nuser: john\n\ntrace\n-----\nline1\nline2\n\nquery\n-----\nSELECT...\n",
                 'Hi',
-                ['trace' => "line1\nline2", 'query' => 'SELECT...', 'user' => 'john']
+                ['trace' => "line1\nline2", 'query' => 'SELECT...', 'user' => 'john'],
             ],
         ];
     }
@@ -37,8 +38,10 @@ class ContextTest extends TestCase
      */
     public function testContext(string $formatted, string $message, array $context)
     {
+        $before = new Record('info', $message, $context);
+        $after  = new Record('info', $formatted, $context);
         $format = new Context(['trace', 'query']);
 
-        $this->assertSame($formatted, $format('info', $message, $context));
+        $this->assertEquals($after, $format($before));
     }
 }

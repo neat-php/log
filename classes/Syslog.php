@@ -34,17 +34,6 @@ class Syslog implements LoggerInterface
     }
 
     /**
-     * Get priority for the given level
-     *
-     * @param string $level
-     * @return int
-     */
-    private function priority(string $level): int
-    {
-        return Level::PRIORITIES[$level] ?? LOG_INFO;
-    }
-
-    /**
      * Log to syslog
      *
      * @param mixed  $level
@@ -53,9 +42,8 @@ class Syslog implements LoggerInterface
      */
     public function log($level, $message, array $context = [])
     {
-        $level   = Normalize::string($level);
-        $message = Normalize::string($message);
+        $record = new Record($level, $message);
 
-        syslog($this->priority($level), $message);
+        syslog($record->priority() ?? LOG_INFO, $record->message());
     }
 }

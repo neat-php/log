@@ -2,26 +2,24 @@
 
 namespace Neat\Log\Format;
 
-use Neat\Log\Normalize;
+use Neat\Log\Record;
 
 class Placeholder
 {
     /**
      * Format message with {placeholder} tags
      *
-     * @param string $level
-     * @param string $message
-     * @param array  $context
-     * @return string
+     * @param Record $record
+     * @return Record
      * @see https://www.php-fig.org/psr/psr-3/#12-message
      */
-    public function __invoke(string $level, string $message, array $context): string
+    public function __invoke(Record $record): Record
     {
         $replace = [];
-        foreach (Normalize::strings($context) as $key => $value) {
+        foreach ($record->contextStrings() as $key => $value) {
             $replace['{' . $key . '}'] = $value;
         }
 
-        return strtr($message, $replace);
+        return $record->withMessage(strtr($record->message(), $replace));
     }
 }

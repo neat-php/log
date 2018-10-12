@@ -3,6 +3,7 @@
 namespace Neat\Log\Test;
 
 use Neat\Log\Filter;
+use Neat\Log\Record;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
@@ -39,14 +40,14 @@ class FilterTest extends TestCase
         $filter1 = $this->createPartialMock('stdClass', ['__invoke']);
         $filter1->expects($this->once())
             ->method('__invoke')
-            ->with('warning', 'Please show me!', [])
+            ->with(new Record('warning', 'Please show me!', []))
             ->willReturn(true);
 
         /** @var MockObject|callable $filter2 */
         $filter2 = $this->createPartialMock('stdClass', ['__invoke']);
         $filter2->expects($this->once())
             ->method('__invoke')
-            ->with('warning', 'Please show me!', [])
+            ->with(new Record('warning', 'Please show me!', []))
             ->willReturn(true);
 
         $log = new Filter($mock, $filter1, $filter2);
@@ -65,7 +66,7 @@ class FilterTest extends TestCase
         $filter1 = $this->createPartialMock('stdClass', ['__invoke']);
         $filter1->expects($this->once())
             ->method('__invoke')
-            ->with('warning', 'Please do not show me!', [])
+            ->with(new Record('warning', 'Please do not show me!', []))
             ->willReturn(false);
 
         /** @var MockObject|callable $filter2 */

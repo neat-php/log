@@ -3,6 +3,7 @@
 namespace Neat\Log\Test\Filter;
 
 use Neat\Log\Filter\Pattern;
+use Neat\Log\Record;
 use PHPUnit\Framework\TestCase;
 
 class PatternTest extends TestCase
@@ -33,8 +34,9 @@ class PatternTest extends TestCase
      */
     public function testMatch(bool $match, string $message, string $pattern, bool $exclude)
     {
+        $record  = new Record('warning', $message);
         $pattern = new Pattern($pattern, $exclude);
-        $matched = $pattern('warning', $message);
+        $matched = $pattern($record);
 
         $this->assertSame($match, $matched);
     }
