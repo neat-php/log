@@ -4,6 +4,8 @@ namespace Neat\Log;
 
 use Psr\Log\LoggerInterface;
 use Psr\Log\LoggerTrait;
+use RuntimeException;
+use TypeError;
 
 class Stream implements LoggerInterface
 {
@@ -24,11 +26,11 @@ class Stream implements LoggerInterface
         if (!is_resource($handle)) {
             $method = __METHOD__;
             $type   = gettype($handle);
-            throw new \TypeError("Argument 1 passed to $method must be of the type resource, $type given");
+            throw new TypeError("Argument 1 passed to $method must be of the type resource, $type given");
         }
         $meta = stream_get_meta_data($handle);
         if (!in_array($meta['mode'], ['a', 'a+'])) {
-            throw new \RuntimeException("Handle is not writable");
+            throw new RuntimeException("Handle is not writable");
         }
         $this->handle = $handle;
     }
