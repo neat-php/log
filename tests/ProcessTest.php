@@ -70,7 +70,7 @@ class ProcessTest extends TestCase
         $log = $this->createLogMockExpecting($level, $expected, $context);
 
         /** @var MockObject|callable $callable */
-        $callable = $this->createPartialMock('stdClass', ['__invoke']);
+        $callable = $this->createPartialMock(CallableMock::class, ['__invoke']);
         $callable->expects($this->once())
             ->method('__invoke')
             ->with(new Record($level, $message, $context))

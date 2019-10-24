@@ -37,7 +37,7 @@ class StampTest extends TestCase
             ->with('info', '[stamped] Hi', ['foo' => 'bar']);
 
         /** @var MockObject|callable $stamper */
-        $stamper = $this->createPartialMock('stdClass', ['__invoke']);
+        $stamper = $this->createPartialMock(CallableMock::class, ['__invoke']);
         $stamper->expects($this->once())
             ->method('__invoke')
             ->with(new Record('info', 'Hi', ['foo' => 'bar']))

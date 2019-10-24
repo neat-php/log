@@ -37,14 +37,14 @@ class FilterTest extends TestCase
             ->with('warning', 'Please show me!', []);
 
         /** @var MockObject|callable $filter1 */
-        $filter1 = $this->createPartialMock('stdClass', ['__invoke']);
+        $filter1 = $this->createPartialMock(CallableMock::class, ['__invoke']);
         $filter1->expects($this->once())
             ->method('__invoke')
             ->with(new Record('warning', 'Please show me!', []))
             ->willReturn(true);
 
         /** @var MockObject|callable $filter2 */
-        $filter2 = $this->createPartialMock('stdClass', ['__invoke']);
+        $filter2 = $this->createPartialMock(CallableMock::class, ['__invoke']);
         $filter2->expects($this->once())
             ->method('__invoke')
             ->with(new Record('warning', 'Please show me!', []))
@@ -63,14 +63,14 @@ class FilterTest extends TestCase
         $mock = $this->createMock(LoggerInterface::class);
 
         /** @var MockObject|callable $filter1 */
-        $filter1 = $this->createPartialMock('stdClass', ['__invoke']);
+        $filter1 = $this->createPartialMock(CallableMock::class, ['__invoke']);
         $filter1->expects($this->once())
             ->method('__invoke')
             ->with(new Record('warning', 'Please do not show me!', []))
             ->willReturn(false);
 
         /** @var MockObject|callable $filter2 */
-        $filter2 = $this->createPartialMock('stdClass', ['__invoke']);
+        $filter2 = $this->createPartialMock(CallableMock::class, ['__invoke']);
 
         $log = new Filter($mock, $filter1, $filter2);
         $log->warning('Please do not show me!');
