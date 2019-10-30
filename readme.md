@@ -93,7 +93,7 @@ time or level of the log entry on each line. The Stamp logger does just that:
 $log = new File(...);
 
 // Then stack the Stamp logger on top with a stamp implementation
-$log = new Stamp($log, new Stamp\Time);
+$log = new Stamp($log, new Stamp\Time());
 
 // The Time stamp allows for setting a custom format and timezone
 $log = new Stamp($log, new Stamp\Time('Y-m-d H:i:s.uO', 'europe/amsterdam'));
@@ -104,7 +104,7 @@ $log = new Stamp($log, function (Record $record) {
 });
 
 // Just like the Filter logger, you can use multiple stamps
-$log = new Stamp($log, new Stamp\Time, new Stamp\Level);
+$log = new Stamp($log, new Stamp\Time(), new Stamp\Level());
 ```
 
 The resulting log file will look like this:
@@ -122,14 +122,14 @@ This logger allows you to completely modify and rewrite the log message:
 $log = new File(...);
 
 // Then you can add placeholder substition using the placeholder processor
-$log = new Process($log, Process\Placeholder);
+$log = new Process($log, new Process\Placeholder());
 $log->info('User {user} wrote a new post titled "{title}"', ['user' => 'John', 'my post title']);
 
 // Or have your messages truncated above a specified message length
-$log = new Process($log, Process\Truncate(80));
+$log = new Process($log, new Process\Truncate(80));
 
 // Or have all context appended to each log entry
-$log = new Process($log, Process\Context);
+$log = new Process($log, new Process\Context());
 ```
 
 Putting it all together
@@ -138,7 +138,7 @@ When you combine these loggers you can create really neat log assemblies like th
 ```php
 $log = new File('logs/app.log');
 $log = new Filter($log, new Filter\Severity('warning'));
-$log = new Stamp($log, new Stamp\Time, new Stamp\Level);
+$log = new Stamp($log, new Stamp\Time(), new Stamp\Level());
 $log = new Process($log, new Process\Truncate(80));
 $log->info(...);
 ```
