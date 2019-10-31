@@ -70,7 +70,7 @@ logger on top of your existing logger:
 $log = new File(...);
 
 // Then attach the Filter to log warnings and more severe entries only
-$log = new Filter($log, new Filter\Serverity('warning'));
+$log = new Filter($log, new Filter\Severity('warning'));
 
 // If you want to log messages matching a pattern, there's filter for that too:
 $log = new Filter($log, new Filter\Pattern('/mail/'));
