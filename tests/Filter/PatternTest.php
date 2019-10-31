@@ -16,10 +16,8 @@ class PatternTest extends TestCase
     public function provideMatchData(): array
     {
         return [
-            [true, 'Message', '/^Message$/', false],
-            [false, 'Message', '/^Message$/', true],
-            [false, 'Message', '/^AnotherMessage$/', false],
-            [true, 'Message', '/^AnotherMessage$/', true],
+            [true, 'Message', '/^Message$/'],
+            [false, 'Message', '/^AnotherMessage$/'],
         ];
     }
 
@@ -29,13 +27,12 @@ class PatternTest extends TestCase
      * @param bool   $match
      * @param string $message
      * @param string $pattern
-     * @param bool   $exclude
      * @dataProvider provideMatchData
      */
-    public function testMatch(bool $match, string $message, string $pattern, bool $exclude)
+    public function testMatch(bool $match, string $message, string $pattern)
     {
         $record  = new Record('warning', $message);
-        $pattern = new Pattern($pattern, $exclude);
+        $pattern = new Pattern($pattern);
         $matched = $pattern($record);
 
         $this->assertSame($match, $matched);

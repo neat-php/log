@@ -12,20 +12,13 @@ class Pattern
     private $pattern;
 
     /**
-     * @var bool
-     */
-    private $exclude;
-
-    /**
      * Pattern constructor
      *
      * @param string $pattern
-     * @param bool   $exclude
      */
-    public function __construct(string $pattern, bool $exclude = false)
+    public function __construct(string $pattern)
     {
         $this->pattern = $pattern;
-        $this->exclude = $exclude;
     }
 
     /**
@@ -36,6 +29,6 @@ class Pattern
      */
     public function __invoke(Record $record): bool
     {
-        return $this->exclude xor preg_match($this->pattern, $record->message());
+        return preg_match($this->pattern, $record->message());
     }
 }
