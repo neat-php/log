@@ -75,6 +75,9 @@ $log = new Filter($log, new Filter\Severity('warning'));
 // If you want to log messages matching a pattern, there's filter for that too:
 $log = new Filter($log, new Filter\Pattern('/mail/'));
 
+// The opposite is quite easy too
+$log = new Filter($log, new Filter\Exclude(new Filter\Pattern('/mail/')));
+
 // Filters are just callables that return a boolean. Roll your own if you like:
 $log = new Filter($log, function(Record $record): bool {
     return strtoupper($record->message()) != $record->message(); // prevents ALL CAPS logs
