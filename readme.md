@@ -143,6 +143,16 @@ $log = new Process($log, new Process\Truncate(80));
 $log->info(...);
 ```
 
+You can even write to multiple loggers or logger assemblies at once using
+the Manifold logger:
+```php
+$output = new Stream(STDOUT);
+$file   = new Filter(new File(logs/app.log'), new Filter\Severity('error'));
+$log    = new Manifold($output, $file);
+$log->info('This message will only be printed on the standard output');
+$log->error('This one will be written to both standard output and logfile');
+```
+
 Resilience
 ----------
 Neat Log components are happy to handle any type of log entry you throw at
