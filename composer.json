@@ -3,9 +3,12 @@
     "description": "Neat Log components",
     "type": "library",
     "keywords": [
+        "psr-3",
+        "neat",
         "log",
-        "logger",
-        "psr"
+        "syslog",
+        "filter",
+        "stamp"
     ],
     "license": "MIT",
     "authors": [
