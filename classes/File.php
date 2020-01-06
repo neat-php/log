@@ -26,6 +26,10 @@ class File implements LoggerInterface
      */
     public function __construct(string $logfile)
     {
+        if ($logfile[0] !== DIRECTORY_SEPARATOR && strpos($logfile, ':') === false) {
+            $logfile = getcwd() . DIRECTORY_SEPARATOR . $logfile;
+        }
+
         $this->logfile = $logfile;
     }
 
